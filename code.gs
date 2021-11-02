@@ -1,7 +1,7 @@
 function myFunction() {
-  var presentation = DriveApp.getFileById("1JrVDlyAD487fm8yLukHsiAN21xzBeGSOrmU30g1CyLM");
-  var folder = DriveApp.getFolderById("1QWHGtTsLWvJynPVX4_4sv9N8Q7ljOe6Z");
-  var pdffolder = DriveApp.getFolderById("1ZDgC1_-z9noesCD5PKSKcuxVy7Ti2bc1");
+  var presentation = DriveApp.getFileById("GOOGLE SLIDE TEMPLATE ID");
+  var folder = DriveApp.getFolderById("GOOGLE DRIVE FOLDER ID WHERE YOU WANT TO STORE SLIDES");
+  var pdffolder = DriveApp.getFolderById("GOOGLE DRIVE FOLDER ID WHERE YOU WANT TO STORE GENERATED PDFS");
   var values = SpreadsheetApp.getActive().getDataRange().getValues();
 
   for(var i=1;i<values.length;i++){
@@ -12,7 +12,12 @@ function myFunction() {
     // slide_array.push(copy.getId())
     doc.saveAndClose()
     Logger.log(`slide created id : ${copy.getId()}`)
-    // generettePdf(copy.getId())
+    
+    //this function is to store pdfs in foler
+    
+    generettePdf(copy.getId())
+    
+    //this function is to send email with pdf attachment
     sendEmail(index=i,id=copy.getId())
   }
 
@@ -25,6 +30,9 @@ function myFunction() {
   async function sendEmail(index,id){
     var filepre = DriveApp.getFileById(id);
     var file = filepre.getAs(MimeType.PDF)
+    
+    //this is my html mailtemplate you can use your own template here
+    
     var htmlBody = `
     <table border="0" cellpadding="0" cellspacing="0" class="nl-container" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #FFFFFF;" width="100%">
       <tbody>
